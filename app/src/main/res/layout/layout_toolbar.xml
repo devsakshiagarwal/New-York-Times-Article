@@ -26,6 +26,7 @@
         android:onClick="@{()->click.onClickBack()}"
         android:paddingStart="@dimen/dp_16"
         android:paddingEnd="0dp"
+        android:visibility="gone"
         android:src="@drawable/ic_back_ff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

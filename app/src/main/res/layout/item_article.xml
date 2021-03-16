@@ -23,7 +23,7 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_article"
-        imageUrl="@{item.media.size() &gt; 0 &amp;&amp; item.media.get(0).mediaMetadata.size() &gt; 0 ? item.media.get(0).mediaMetadata.get(0).url : ``}"
+        imageUrl="@{item.media.size() &gt; 0 &amp;&amp; item.media.get(0).mediaMetadata.size() &gt; 0 ? item.media.get(0).mediaMetadata.get(1).url : ``}"
         android:layout_width="@dimen/dp_48"
         android:layout_height="@dimen/dp_48"
         android:scaleType="centerCrop"
@@ -46,7 +46,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_article_by"
-        style="@style/text_12_black"
+        style="@style/text_13_black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_64"

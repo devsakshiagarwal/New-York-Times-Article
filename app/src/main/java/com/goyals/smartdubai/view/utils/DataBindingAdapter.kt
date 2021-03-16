@@ -18,5 +18,15 @@ class DataBindingAdapter {
         .transform(CircleCrop())
         .into(view)
     }
+
+    @JvmStatic @BindingAdapter("mediaUrl") fun loadImage(view: ImageView,
+      loadImageURL: String?) {
+      Glide.with(view.context)
+        .load(loadImageURL)
+        .placeholder(R.color.teal_700)
+        .error(R.color.teal_700)
+        .centerCrop()
+        .into(view)
+    }
   }
 }

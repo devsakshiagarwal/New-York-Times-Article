@@ -14,7 +14,8 @@ abstract class BaseDataSource {
       val errorBody = JSONObject(response.errorBody()!!
         .charStream()
         .readText())
-      return error(errorBody.getString("message"))
+      return error(errorBody.getJSONObject("fault")
+        .getString("faultstring"))
     } catch (e: Exception) {
       return error(e.message ?: e.toString())
     }

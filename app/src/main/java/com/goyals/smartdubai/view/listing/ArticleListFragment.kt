@@ -16,11 +16,10 @@ import com.goyals.smartdubai.databinding.FragmentArticleListBinding
 import com.goyals.smartdubai.model.schema.Result
 import com.goyals.smartdubai.view.listing.ArticleListAdapter.ArticleClickListener
 import com.goyals.smartdubai.view.utils.ErrorDialog
-import com.goyals.smartdubai.view.utils.ToolBarClick
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ArticleListFragment : Fragment(), ToolBarClick, ArticleClickListener {
+class ArticleListFragment : Fragment(), ArticleClickListener {
   lateinit var binding: FragmentArticleListBinding
   private val viewModel: ArticleListViewModel by viewModels()
 
@@ -36,10 +35,6 @@ class ArticleListFragment : Fragment(), ToolBarClick, ArticleClickListener {
     savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
     getData()
-  }
-
-  override fun onClickBack() {
-    findNavController().navigateUp()
   }
 
   override fun onArticleClick(article: Result) {
@@ -59,6 +54,7 @@ class ArticleListFragment : Fragment(), ToolBarClick, ArticleClickListener {
             ERROR -> {
               binding.layoutProgress.visibility = View.GONE
               ErrorDialog.newInstance(it.message!!)
+                .show(requireActivity().supportFragmentManager, "error")
             }
             LOADING -> binding.layoutProgress.visibility = View.VISIBLE
           }
@@ -68,9 +64,7 @@ class ArticleListFragment : Fragment(), ToolBarClick, ArticleClickListener {
 
   private fun setAdapter(items: List<Result>) {
     binding.viewModel = viewModel
-    binding.layoutToolbar.click
     binding.layoutToolbar.title = getString(R.string.app_name)
-    binding.layoutToolbar.ivNavigation.visibility = View.GONE
     val articleListAdapter = ArticleListAdapter(requireContext(), this)
     articleListAdapter.setData(items)
     binding.rvArticle.apply {
