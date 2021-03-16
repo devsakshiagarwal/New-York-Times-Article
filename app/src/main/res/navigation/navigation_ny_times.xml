@@ -14,6 +14,12 @@
       android:id="@+id/nav_article_detail"
       android:name="com.goyals.smartdubai.view.detail.ArticleDetailFragment"
       android:label=""
-      tools:layout="@layout/fragment_article_detail" />
+      tools:layout="@layout/fragment_article_detail" >
+
+    <argument
+        android:name="result"
+        app:argType="com.goyals.smartdubai.model.schema.Result" />
+
+  </fragment>
 
 </navigation>

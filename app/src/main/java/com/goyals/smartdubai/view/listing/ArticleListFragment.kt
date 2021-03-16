@@ -1,29 +1,86 @@
 package com.goyals.smartdubai.view.listing
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.goyals.smartdubai.R
+import com.goyals.smartdubai.arch.netwrok.Result.Status.ERROR
+import com.goyals.smartdubai.arch.netwrok.Result.Status.LOADING
+import com.goyals.smartdubai.arch.netwrok.Result.Status.SUCCESS
+import com.goyals.smartdubai.databinding.FragmentArticleListBinding
+import com.goyals.smartdubai.model.schema.Result
+import com.goyals.smartdubai.view.listing.ArticleListAdapter.ArticleClickListener
+import com.goyals.smartdubai.view.utils.ErrorDialog
+import com.goyals.smartdubai.view.utils.ToolBarClick
+import dagger.hilt.android.AndroidEntryPoint
 
-class ArticleListFragment : Fragment() {
-  companion object {
-    fun newInstance() = ArticleListFragment()
-  }
-
-  private lateinit var viewModel: ArticleListViewModel
+@AndroidEntryPoint
+class ArticleListFragment : Fragment(), ToolBarClick, ArticleClickListener {
+  lateinit var binding: FragmentArticleListBinding
+  private val viewModel: ArticleListViewModel by viewModels()
 
   override fun onCreateView(inflater: LayoutInflater,
-      container: ViewGroup?,
-      savedInstanceState: Bundle?): View? {
-    return inflater.inflate(R.layout.fragment_article_list, container, false)
+    container: ViewGroup?,
+    savedInstanceState: Bundle?): View {
+    binding = DataBindingUtil.inflate(inflater, R.layout.fragment_article_list,
+      container, false)
+    return binding.root
   }
 
-  override fun onActivityCreated(savedInstanceState: Bundle?) {
-    super.onActivityCreated(savedInstanceState)
-    viewModel = ViewModelProvider(this).get(ArticleListViewModel::class.java)
-    // TODO: Use the ViewModel
+  override fun onViewCreated(view: View,
+    savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    getData()
+  }
+
+  override fun onClickBack() {
+    findNavController().navigateUp()
+  }
+
+  override fun onArticleClick(article: Result) {
+    findNavController().navigate(R.id.nav_article_detail,
+      getBundleForArticleData(article))
+  }
+
+  private fun getData() {
+    viewModel.getNyTimesMostPopularList()
+      .observe(viewLifecycleOwner, {
+        it?.let {
+          when (it.status) {
+            SUCCESS -> {
+              binding.layoutProgress.visibility = View.GONE
+              setAdapter(it.data?.results!!)
+            }
+            ERROR -> {
+              binding.layoutProgress.visibility = View.GONE
+              ErrorDialog.newInstance(it.message!!)
+            }
+            LOADING -> binding.layoutProgress.visibility = View.VISIBLE
+          }
+        }
+      })
+  }
+
+  private fun setAdapter(items: List<Result>) {
+    binding.viewModel = viewModel
+    binding.layoutToolbar.click
+    binding.layoutToolbar.title = getString(R.string.app_name)
+    binding.layoutToolbar.ivNavigation.visibility = View.GONE
+    val articleListAdapter = ArticleListAdapter(requireContext(), this)
+    articleListAdapter.setData(items)
+    binding.rvArticle.apply {
+      adapter = articleListAdapter
+    }
+  }
+
+  private fun getBundleForArticleData(result: Result): Bundle {
+    val bundle = Bundle()
+    bundle.putParcelable("result", result)
+    return bundle
   }
 }

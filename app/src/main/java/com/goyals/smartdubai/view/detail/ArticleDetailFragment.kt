@@ -9,9 +9,6 @@ import android.view.ViewGroup
 import com.goyals.smartdubai.R
 
 class ArticleDetailFragment : Fragment() {
-  companion object {
-    fun newInstance() = ArticleDetailFragment()
-  }
 
   private lateinit var viewModel: ArticleDetailViewModel
 

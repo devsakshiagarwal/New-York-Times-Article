@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+  <data>
+    <import type="android.view.View" />
+    <variable
+        name="click"
+        type="com.goyals.smartdubai.view.listing.ArticleListAdapter.ArticleClickListener"
+        />
+    <variable
+        name="item"
+        type="com.goyals.smartdubai.model.schema.Result"
+        />
+  </data>
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:onClick="@{()->click.onArticleClick(item)}"
+      android:paddingHorizontal="@dimen/dp_12"
+      android:paddingTop="@dimen/dp_16"
+      >
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_article"
+        imageUrl="@{item.media.size() &gt; 0 &amp;&amp; item.media.get(0).mediaMetadata.size() &gt; 0 ? item.media.get(0).mediaMetadata.get(0).url : ``}"
+        android:layout_width="@dimen/dp_48"
+        android:layout_height="@dimen/dp_48"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="@dimen/dp_8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_title"
+        style="@style/text_14_black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_64"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="@{item.title}"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_article_by"
+        style="@style/text_12_black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_64"
+        android:layout_marginTop="@dimen/dp_8"
+        android:text="@{@string/article_by(item.byline, item.timeToShow)}"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_url"
+        style="@style/text_12_teal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp_64"
+        android:layout_marginTop="@dimen/dp_8"
+        android:text="@{item.url}"
+        app:layout_constraintTop_toBottomOf="@id/tv_article_by"
+        />
+
+    <View
+        android:id="@+id/view_divider"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="@dimen/dp_12"
+        android:background="@color/color_ac"
+        app:layout_constraintTop_toBottomOf="@id/tv_url"
+        />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

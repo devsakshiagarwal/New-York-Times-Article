@@ -1,3 +1,4 @@
 <resources>
   <string name="app_name">Smart Dubai</string>
+  <string name="article_by">%1$s On %2$s</string>
 </resources>

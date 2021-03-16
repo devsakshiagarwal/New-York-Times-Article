@@ -1,4 +1,4 @@
-package com.goyals.smartdubai.view.toolbar
+package com.goyals.smartdubai.view.utils
 
 interface ToolBarClick {
   fun onClickBack()
