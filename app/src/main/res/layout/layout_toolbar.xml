@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+  <data>
+    <import type="android.view.View" />
+    <variable
+        name="title"
+        type="String"
+        />
+    <variable
+        name="click"
+        type="com.goyals.smartdubai.view.toolbar.ToolBarClick"
+        />
+  </data>
+  <androidx.constraintlayout.widget.ConstraintLayout
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/height_toolbar"
+      android:background="@color/black"
+      >
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="@{()->click.onClickBack()}"
+        android:padding="@dimen/dp_16"
+        android:src="@drawable/ic_back_ff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_back"
+        style="@style/text_17_black_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@{title}"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_navigation"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+  </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_article_list">
+
+  <fragment
+      android:id="@+id/nav_article_list"
+      android:name="com.goyals.smartdubai.view.listing.ArticleListFragment"
+      tools:layout="@layout/fragment_article_list" />
+
+  <fragment
+      android:id="@+id/nav_article_detail"
+      android:name="com.goyals.smartdubai.view.detail.ArticleDetailFragment"
+      android:label=""
+      tools:layout="@layout/fragment_article_detail" />
+
+</navigation>
