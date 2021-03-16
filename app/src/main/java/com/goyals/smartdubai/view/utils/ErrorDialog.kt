@@ -17,6 +17,7 @@ class ErrorDialog : DialogFragment() {
   override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
     return activity?.let {
       val builder = AlertDialog.Builder(it)
+      builder.setTitle("Error")
       builder.setMessage(arguments?.getString("message", ""))
         .setPositiveButton("Ok") { _, _ ->
           dismiss()
